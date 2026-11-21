@@ -1,0 +1,62 @@
+---
+// Footer.astro — short line, social links, auto-updating year.
+
+// EDIT YOUR SOCIAL LINKS HERE (replace the # placeholders with real URLs)
+const socials = [
+  { label: 'Behance', href: 'https://www.behance.net/your-username' },
+  { label: 'Instagram', href: 'https://www.instagram.com/your-username' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/your-username' },
+];
+
+// Runs at build time; the small script below keeps it fresh in the browser
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-copy">
+      © <span class="year">{year}</span> Muhammad Shahzaib. Designed with care.
+    </p>
+    <ul role="list" class="footer-links">
+      {
+        socials.map((s) => (
+          <li>
+            <a href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label}
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-7);
+    margin-top: var(--space-8);
+  }
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .footer-copy { color: var(--color-muted); font-size: var(--text-sm); }
+  .footer-links { display: flex; gap: var(--space-5); font-size: var(--text-sm); }
+  @media (min-width: 640px) {
+    .footer-inner { flex-direction: row; align-items: center; }
+  }
+</style>
+
+<script>
+  // Auto-update the year in the visitor's browser
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('.year').forEach((el) => {
+      el.textContent = String(new Date().getFullYear());
+    });
+  });
+</script>

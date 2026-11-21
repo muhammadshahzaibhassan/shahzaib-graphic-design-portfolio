@@ -1,0 +1,28 @@
+---
+// work/index.astro — all projects, newest first, with category filter.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout title="Work" description="Selected projects in branding, poster design, photography and video editing by Muhammad Shahzaib.">
+  <section class="section container">
+    <p class="eyebrow">Portfolio</p>
+    <h1 class="page-title">All work</h1>
+    <p class="page-intro">A collection of branding, posters, photography and motion projects.</p>
+
+    <CategoryFilter />
+
+    <div class="grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title { margin-bottom: var(--space-4); }
+  .page-intro { color: var(--color-muted); margin-bottom: var(--space-7); }
+</style>

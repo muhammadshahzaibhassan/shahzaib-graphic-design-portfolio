@@ -1,0 +1,186 @@
+---
+// Header.astro — sticky header with blur, active link highlight, mobile menu.
+
+// EDIT YOUR NAV LINKS HERE (label + url)
+const navLinks = [
+  { label: 'Work', href: '/work/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+
+const currentPath = Astro.url.pathname;
+// A link is "active" when the current path starts with its href
+const isActive = (href: string) => currentPath.startsWith(href);
+---
+
+<header class="site-header" transition:persist="header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Muhammad Shahzaib — home">
+      Shahzaib<span class="logo-dot">.</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="Open menu"
+    >
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul role="list">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={['nav-link', { active: isActive(link.href) }]}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgb(11 11 13 / 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-lg);
+    letter-spacing: -0.02em;
+  }
+  .logo-dot { color: var(--color-accent); }
+
+  /* Hamburger button (mobile) */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    z-index: 2;
+  }
+  .bar {
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    transition: transform var(--transition-fast);
+  }
+  .menu-toggle[aria-expanded='true'] .bar:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-toggle[aria-expanded='true'] .bar:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+  /* Mobile nav: full-screen overlay */
+  .site-nav {
+    position: fixed;
+    inset: 0;
+    top: var(--header-height);
+    background: var(--color-bg);
+    padding: var(--space-7) var(--gutter);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform var(--transition), visibility var(--transition);
+  }
+  .site-nav.open { transform: none; visibility: visible; }
+  .site-nav ul { display: flex; flex-direction: column; gap: var(--space-5); }
+  .nav-link {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+  .nav-link.active { color: var(--color-accent); }
+
+  /* Desktop nav: inline links */
+  @media (min-width: 768px) {
+    .menu-toggle { display: none; }
+    .site-nav {
+      position: static;
+      inset: auto;
+      padding: 0;
+      transform: none;
+      visibility: visible;
+      background: none;
+    }
+    .site-nav ul { flex-direction: row; gap: var(--space-6); }
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      position: relative;
+      padding-block: var(--space-2);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: 2px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-fast);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after { transform: scaleX(1); }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle + highlight active link after page transitions.
+  function initHeader() {
+    const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+    const nav = document.querySelector<HTMLElement>('#site-nav');
+    if (!toggle || !nav) return;
+
+    const setOpen = (open: boolean) => {
+      nav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+
+    // Replace the button to remove any listeners from a previous page load
+    const fresh = toggle.cloneNode(true) as HTMLButtonElement;
+    toggle.replaceWith(fresh);
+    fresh.addEventListener('click', () => setOpen(fresh.getAttribute('aria-expanded') !== 'true'));
+
+    // Close when a link is clicked
+    nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+    // Close with Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    // The header persists across page transitions, so update the active link manually
+    const path = window.location.pathname;
+    nav.querySelectorAll<HTMLAnchorElement>('.nav-link').forEach((a) => {
+      const active = path.startsWith(a.getAttribute('href') || '#');
+      a.classList.toggle('active', active);
+      if (active) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  document.addEventListener('astro:page-load', initHeader);
+</script>

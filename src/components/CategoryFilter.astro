@@ -1,0 +1,74 @@
+---
+// CategoryFilter.astro — filter buttons built automatically from project categories.
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+// Unique categories, alphabetical. A new category in any .md file adds a button.
+const categories = [...new Set(projects.map((p) => p.data.category))].sort();
+---
+
+<div class="filter" role="group" aria-label="Filter projects by category">
+  <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+  {
+    categories.map((cat) => (
+      <button type="button" class="filter-btn" data-filter={cat} aria-pressed="false">
+        {cat}
+      </button>
+    ))
+  }
+</div>
+
+<style>
+  .filter { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .filter-btn {
+    padding: 0.55em 1.2em;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    transition: all var(--transition-fast);
+  }
+  .filter-btn:hover { color: var(--color-text); border-color: var(--color-text); }
+  .filter-btn.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-contrast);
+  }
+</style>
+
+<script>
+  // Filters cards that have a data-category attribute.
+  function initFilter() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('[data-category]');
+    if (!buttons.length) return;
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+
+        buttons.forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+
+        cards.forEach((card) => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          if (match) {
+            card.classList.remove('is-hidden');
+            // next frame so the fade-in transition plays
+            requestAnimationFrame(() => card.classList.remove('is-hiding'));
+          } else {
+            card.classList.add('is-hiding');
+            // wait for the fade-out, then remove from layout
+            setTimeout(() => {
+              if (card.classList.contains('is-hiding')) card.classList.add('is-hidden');
+            }, 400);
+          }
+        });
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initFilter);
+</script>

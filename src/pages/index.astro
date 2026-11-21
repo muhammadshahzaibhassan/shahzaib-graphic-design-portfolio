@@ -1,0 +1,95 @@
+---
+// index.astro — Home page: hero, featured work, about teaser, call to action.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+// Featured projects, sorted by "order" (lowest first, no order = last)
+const featured = (await getCollection('projects', ({ data }) => data.featured)).sort(
+  (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999)
+);
+---
+
+<BaseLayout title="Muhammad Shahzaib" description="Graphic designer, photographer, video editor and sketch artist. Explore branding, posters, photography and motion work.">
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="container">
+      <p class="eyebrow reveal">Graphic Designer · Photographer · Editor</p>
+      <h1 class="hero-title reveal">
+        I design <span class="accent">bold visuals</span> that people remember.
+      </h1>
+      <p class="hero-intro reveal">
+        Hi, I'm Muhammad Shahzaib — I turn ideas into brands, posters, photos and motion.
+      </p>
+      <div class="btn-row reveal">
+        <a href="/work/" class="btn">View Work</a>
+        <a href="/contact/" class="btn btn--ghost">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  <section class="section--tight container reveal" aria-labelledby="featured-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 id="featured-title">Featured projects</h2>
+      </div>
+      <a href="/work/" class="btn btn--ghost">All projects</a>
+    </div>
+    <div class="grid">
+      {featured.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <!-- ABOUT TEASER -->
+  <section class="section container reveal" aria-labelledby="about-title">
+    <div class="teaser">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">A computer science student with a designer's eye.</h2>
+      </div>
+      <div>
+        <p class="teaser-text">
+          I'm studying computer science while building a creative practice in graphic design,
+          photography, video editing and sketching. I love clean ideas, strong type and
+          details that make a design feel alive.
+        </p>
+        <a href="/about/" class="btn btn--ghost">More about me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="container reveal" aria-labelledby="cta-title">
+    <div class="cta">
+      <h2 id="cta-title">Have a project in mind?</h2>
+      <p>Let's make something great together.</p>
+      <a href="/contact/" class="btn">Get in touch</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding-top: var(--space-9); }
+  .hero-title { font-size: var(--text-3xl); max-width: 16ch; margin-bottom: var(--space-5); }
+  .accent { color: var(--color-accent); }
+  .hero-intro { color: var(--color-muted); font-size: var(--text-lg); margin-bottom: var(--space-6); }
+
+  .teaser { display: grid; gap: var(--space-6); }
+  .teaser-text { color: var(--color-muted); margin-bottom: var(--space-5); }
+  @media (min-width: 800px) { .teaser { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+  .cta {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .cta p { color: var(--color-muted); }
+</style>

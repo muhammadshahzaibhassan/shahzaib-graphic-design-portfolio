@@ -1,0 +1,109 @@
+---
+// [...slug].astro — one page per project, generated at build time.
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Lightbox from '../../components/Lightbox.astro';
+
+export async function getStaticPaths() {
+  // Same order as the Work page (newest first) so Previous/Next feel natural
+  const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+  return projects.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: projects[i - 1] ?? null, // newer project
+      next: projects[i + 1] ?? null, // older project
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const { title, category, year, description, cover, coverAlt, tools } = entry.data;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="project container section--tight">
+    <header class="project-head">
+      <p class="eyebrow">{category}</p>
+      <h1>{title}</h1>
+      <p class="project-desc">{description}</p>
+      <dl class="meta">
+        <div><dt>Category</dt><dd>{category}</dd></div>
+        <div><dt>Year</dt><dd>{year}</dd></div>
+        <div><dt>Tools</dt><dd>{tools.join(', ')}</dd></div>
+      </dl>
+    </header>
+
+    <!-- Large cover image (loaded eagerly: it is the main visual) -->
+    <Image
+      class="cover"
+      src={cover}
+      alt={coverAlt}
+      widths={[800, 1200, 1800]}
+      sizes="(min-width: 1200px) 1120px, 100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+
+    <!-- Markdown content -->
+    <div class="prose">
+      <Content />
+    </div>
+
+    <!-- Previous / Next -->
+    <nav class="pager" aria-label="More projects">
+      {
+        prev ? (
+          <a href={`/work/${prev.id}/`} class="pager-link">
+            <span class="pager-label">← Previous</span>
+            <span class="pager-title">{prev.data.title}</span>
+          </a>
+        ) : <span />
+      }
+      {
+        next ? (
+          <a href={`/work/${next.id}/`} class="pager-link pager-next">
+            <span class="pager-label">Next →</span>
+            <span class="pager-title">{next.data.title}</span>
+          </a>
+        ) : <span />
+      }
+    </nav>
+  </article>
+
+  <Lightbox />
+</BaseLayout>
+
+<style>
+  .project-head { margin-bottom: var(--space-7); }
+  .project-head h1 { font-size: var(--text-3xl); margin-bottom: var(--space-4); }
+  .project-desc { color: var(--color-muted); font-size: var(--text-lg); margin-bottom: var(--space-6); }
+
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-border); }
+  .meta dt { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-muted); }
+  .meta dd { margin: var(--space-1) 0 0; font-weight: 500; }
+
+  .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-8);
+  }
+
+  .pager {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+  @media (min-width: 640px) { .pager { grid-template-columns: 1fr 1fr; } }
+  .pager-link { display: flex; flex-direction: column; gap: var(--space-2); }
+  .pager-next { text-align: left; }
+  @media (min-width: 640px) { .pager-next { text-align: right; } }
+  .pager-label { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-accent); }
+  .pager-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
+</style>
