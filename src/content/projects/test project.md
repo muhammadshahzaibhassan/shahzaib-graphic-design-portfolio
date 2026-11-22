@@ -6,7 +6,7 @@ description: "A fast-paced showreel of edits, motion graphics and colour grading
 cover: "../../assets/projects/motion-reel-2026/cover.jpg"
 coverAlt: "Frames from a video editing timeline with colourful motion graphics"
 tools: ["Premiere Pro", "After Effects", "DaVinci Resolve"]
-featured: false
+featured: true
 ---
 
 ## Overview
