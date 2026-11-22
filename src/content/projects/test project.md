@@ -3,7 +3,7 @@ title: "Al Hamd Tech - Social Media Design"
 category: "Social Media Design"
 year: 2026
 description: "A collection of product-focused social media designs created to showcase technology products through bold visuals, engaging typography, and premium promotional layouts."
-cover: "../../assets/projects/alhamdtech-social-media-posts/cover,jpg"
+cover: "../../assets/projects/alhamdtech-social-media-posts/cover.jpg"
 coverAlt: "Al Hamd Tech social media design collection"
 tools: ["Adobe Photoshop", "Adobe Illustrator", "Affinity"]
 featured: true
