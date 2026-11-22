@@ -14,10 +14,10 @@ featured: true
 Al Hamd Tech is an online technology and electronics retailer offering a wide range of products, including headphones, webcams, wireless accessories, gaming equipment, digital tablets, and smart gadgets.
 
 ![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image1.jpg)
-![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image2.jpg)
-![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image3.jpg)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image2.png)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image3.png)
 ![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image4.jpg)
-![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image5.jpg)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image5.png)
 ![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image6.jpg)
 ![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image7.jpg)
 
