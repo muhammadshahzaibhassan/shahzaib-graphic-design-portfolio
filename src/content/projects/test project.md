@@ -13,10 +13,10 @@ featured: true
 
 A 60-second reel that brings together short films, promo edits and kinetic typography.
 
-![Timeline and key frames from the reel](../../assets/projects/motion-reel-2026/image-1.jpg)
+<!-- ![Timeline and key frames from the reel](../../assets/projects/motion-reel-2026/) -->
 
 ## Rhythm and colour
 
 Cuts are timed to the beat, and each scene is graded to keep a consistent, cinematic mood.
 
-![Colour grading comparison, before and after](../../assets/projects/motion-reel-2026/image-2.jpg)
+<!-- ![Colour grading comparison, before and after](../../assets/projects/motion-reel-2026/image-2.jpg) -->
