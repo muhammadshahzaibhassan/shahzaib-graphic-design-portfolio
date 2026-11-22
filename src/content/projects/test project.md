@@ -1,11 +1,11 @@
 ---
-title: "Motion Reel 2026"
-category: "Social Media Post Design"
+title: "Al Hamd Tech - Social Media Design"
+category: "Social Media Design"
 year: 2026
-description: "A fast-paced showreel of edits, motion graphics and colour grading from the past year."
-cover: "../../assets/projects/motion-reel-2026/cover.jpg"
-coverAlt: "Frames from a video editing timeline with colourful motion graphics"
-tools: ["Premiere Pro", "After Effects", "DaVinci Resolve"]
+description: "A collection of product-focused social media designs created to showcase technology products through bold visuals, engaging typography, and premium promotional layouts."
+cover: "../../assets/projects/alhamdtech-social-media-posts/cover,jpg"
+coverAlt: "Al Hamd Tech social media design collection"
+tools: ["Adobe Photoshop", "Adobe Illustrator", "Affinity"]
 featured: true
 ---
 
