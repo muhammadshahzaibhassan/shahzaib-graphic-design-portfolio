@@ -14,12 +14,16 @@ featured: true
 Al Hamd Tech is an online technology and electronics retailer offering a wide range of products, including headphones, webcams, wireless accessories, gaming equipment, digital tablets, and smart gadgets.
 
 ![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image1.jpg)
-
-The project focuses on developing a consistent social media presence through visually engaging product advertisements and promotional posts. Each design communicates product features, highlights key benefits, and encourages customers to explore and purchase through the brand's online store.
-
-
-## Rhythm and colour
-
-Cuts are timed to the beat, and each scene is graded to keep a consistent, cinematic mood.
-
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image2.jpg)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image3.jpg)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image4.jpg)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image5.jpg)
 ![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image6.jpg)
+![Timeline and key frames from the reel](../../assets/projects/alhamdtech-social-media-posts/image7.jpg)
+
+
+
+<!-- ## Rhythm and colour -->
+## Final Outcome
+The designs include individual product promotions, educational buying guides, feature highlights, product comparisons, and promotional advertisements. Together, they establish a consistent and recognizable visual language that communicates the brand's offerings while making its social media feed more engaging and professional.
+
