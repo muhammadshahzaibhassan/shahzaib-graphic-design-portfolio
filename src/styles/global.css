@@ -40,8 +40,8 @@
   --space-9: clamp(4rem, 3rem + 6vw, 9rem); /* big section spacing */
 
   /* LAYOUT */
-  --container-width: 1200px;   /* max content width */
-  --gutter: clamp(1rem, 4vw, 2.5rem); /* left/right page padding */
+  --container-width: 1680px;   /* max content width (was 1200px) */
+  --gutter: clamp(0.75rem, 2.5vw, 2rem); /* left/right page padding (was clamp(1rem, 4vw, 2.5rem)) */
   --header-height: 72px;
 
   /* SHAPE */
@@ -240,3 +240,26 @@ a:hover { color: var(--color-accent); }
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* ---------- 9. PROJECT PAGE IMAGE GRID ----------
+   Images written one after another in a project's markdown become a tight grid.
+   --cols = how many pictures per row. Change the numbers to taste. */
+.prose { --cols: 2; --grid-gap: var(--space-3); }                                  /* phones */
+@media (min-width: 700px)  { .prose { --cols: 3; --grid-gap: var(--space-4); } }   /* tablets */
+@media (min-width: 1000px) { .prose { --cols: 4; } }                               /* laptops + desktops */
+
+.prose p:has(> img + img),
+.prose p:has(> img + br) {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: var(--grid-gap);
+  align-items: start;
+  max-width: none;          /* let the grid use the full width */
+}
+.prose p:has(> img + img) br,
+.prose p:has(> img + br) br { display: none; }
+.prose p:has(> img + img) img,
+.prose p:has(> img + br) img { margin-block: 0; }
+
+/* Normal paragraphs keep a comfortable reading width */
+.prose > p:not(:has(> img)) { max-width: 75ch; }
