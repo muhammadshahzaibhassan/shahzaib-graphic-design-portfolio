@@ -1,5 +1,5 @@
 ---
-title: "Al Hamd Tech - Social Media Design"
+title: "Al Hamd Tech : Social Media Design"
 category: "Social Media Design"
 year: 2026
 description: "A collection of product-focused social media designs created to showcase technology products through bold visuals, engaging typography, and premium promotional layouts."
